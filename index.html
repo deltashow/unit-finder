@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مستكشف الوحدات التفاعلي | Interactive Unit Finder</title>
+    <!-- CSS External -->
+    <link rel="stylesheet" href="unit-finder.css">
+    <!-- FontAwesome & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Three.js for 3D View -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Sidebar Controls -->
+        <aside class="sidebar">
+            <div class="brand">
+                <i class="fa-solid fa-city brand-icon"></i>
+                <h2>PROPTECH<span>3D</span></h2>
+            </div>
+
+            <div class="filter-section">
+                <h3><i class="fa-solid fa-filter"></i> تصفية الوحدات</h3>
+                
+                <div class="filter-group">
+                    <label>حالة الوحدة</label>
+                    <select id="statusFilter">
+                        <option value="all">جميع الحالات</option>
+                        <option value="available">متاح للبيع</option>
+                        <option value="reserved">محجوز</option>
+                        <option value="sold">مباع</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>عدد الغرف</label>
+                    <select id="roomsFilter">
+                        <option value="all">الكل</option>
+                        <option value="2">2 غرف</option>
+                        <option value="3">3 غرف</option>
+                        <option value="4">4+ غرف</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>الحد الأقصى للسعر: <span id="priceValue">10,000,000</span> ج.م</label>
+                    <input type="range" id="priceRange" min="2000000" max="10000000" step="500000" value="10000000">
+                </div>
+            </div>
+
+            <div class="stats-card">
+                <div class="stat-item">
+                    <span class="dot available"></span>
+                    <span>متاح: <strong id="availableCount">0</strong></span>
+                </div>
+                <div class="stat-item">
+                    <span class="dot reserved"></span>
+                    <span>محجوز: <strong id="reservedCount">0</strong></span>
+                </div>
+                <div class="stat-item">
+                    <span class="dot sold"></span>
+                    <span>مباع: <strong id="soldCount">0</strong></span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Interactive Viewport -->
+        <main class="viewport-container">
+            <header class="top-nav">
+                <div class="view-toggle">
+                    <button class="btn-toggle active" id="view3dBtn"><i class="fa-solid fa-cube"></i> المخطط الـ 3D</button>
+                    <button class="btn-toggle" id="viewGridBtn"><i class="fa-solid fa-border-all"></i> شبكة الوحدات</button>
+                </div>
+                <div class="project-title">مشروع الزمردة السكني - التجمع الخامس</div>
+            </header>
+
+            <!-- 3D Canvas Canvas Container -->
+            <div id="canvas3dContainer" class="view-content active">
+                <div class="instruction-overlay">
+                    <i class="fa-solid fa-hand-pointer"></i> انقر على أي مبنى/وحدة لرؤية التفاصيل الكاملة
+                </div>
+            </div>
+
+            <!-- Grid Fallback View -->
+            <div id="gridContainer" class="view-content cards-grid">
+                <!-- Dynamically Generated via JS -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal Details Window -->
+    <div class="modal-backdrop" id="unitModal">
+        <div class="modal-card">
+            <button class="close-btn" id="closeModal">&times;</button>
+            <div class="modal-header">
+                <span class="badge" id="modalBadge">متاح</span>
+                <h2 id="modalTitle">شقة رقم A-102</h2>
+            </div>
+            <div class="modal-body">
+                <div class="modal-specs">
+                    <div class="spec-box"><i class="fa-solid fa-ruler-combined"></i> <span id="modalArea">185 م²</span></div>
+                    <div class="spec-box"><i class="fa-solid fa-bed"></i> <span id="modalBedrooms">3 غرف</span></div>
+                    <div class="spec-box"><i class="fa-solid fa-bath"></i> <span id="modalBathrooms">2 حمام</span></div>
+                    <div class="spec-box"><i class="fa-solid fa-building"></i> <span id="modalFloor">الدور الثاني</span></div>
+                </div>
+                <div class="price-tag">
+                    <span>السعر النهائي:</span>
+                    <h3 id="modalPrice">4,250,000 ج.م</h3>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-primary" id="bookNowBtn"><i class="fa-solid fa-bolt"></i> حجز الوحدة الآن</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="unit-finder.js"></script>
+</body>
+</html>

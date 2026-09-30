@@ -1,0 +1,304 @@
+:root {
+    --bg-dark: #0f172a;
+    --bg-card: #1e293b;
+    --accent-gold: #f59e0b;
+    --accent-blue: #38bdf8;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --status-available: #10b981;
+    --status-reserved: #f59e0b;
+    --status-sold: #ef4444;
+    --border-color: rgba(255, 255, 255, 0.1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Cairo', sans-serif;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    overflow: hidden;
+    height: 100vh;
+}
+
+.app-container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    width: 340px;
+    background: var(--bg-card);
+    border-left: 1px solid var(--border-color);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    z-index: 10;
+    box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-icon {
+    font-size: 28px;
+    color: var(--accent-gold);
+}
+
+.brand h2 {
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.brand h2 span {
+    color: var(--accent-blue);
+}
+
+.filter-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.filter-section h3 {
+    font-size: 16px;
+    color: var(--accent-gold);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.filter-group label {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+select, input[type="range"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    background: var(--bg-dark);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    outline: none;
+}
+
+/* Stats Card */
+.stats-card {
+    margin-top: auto;
+    background: rgba(15, 23, 42, 0.6);
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+.dot.available { background: var(--status-available); }
+.dot.reserved { background: var(--status-reserved); }
+.dot.sold { background: var(--status-sold); }
+
+/* Main Viewport */
+.viewport-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.top-nav {
+    height: 70px;
+    padding: 0 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    background: rgba(30, 41, 59, 0.8);
+    backdrop-filter: blur(10px);
+    z-index: 5;
+}
+
+.btn-toggle {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 8px;
+}
+
+.btn-toggle.active, .btn-toggle:hover {
+    background: var(--accent-gold);
+    color: var(--bg-dark);
+    font-weight: 700;
+    border-color: var(--accent-gold);
+}
+
+.view-content {
+    display: none;
+    height: calc(100vh - 70px);
+    width: 100%;
+    position: relative;
+}
+
+.view-content.active {
+    display: block;
+}
+
+.instruction-overlay {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(15, 23, 42, 0.8);
+    padding: 10px 18px;
+    border-radius: 30px;
+    border: 1px solid var(--border-color);
+    font-size: 13px;
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Grid View Cards */
+.cards-grid {
+    padding: 32px;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.unit-card {
+    background: var(--bg-card);
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.unit-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+    border-color: var(--accent-blue);
+}
+
+.card-status {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.status-available { background: rgba(16, 185, 129, 0.2); color: var(--status-available); }
+.status-reserved { background: rgba(245, 158, 11, 0.2); color: var(--status-reserved); }
+.status-sold { background: rgba(239, 68, 68, 0.2); color: var(--status-sold); }
+
+/* Modal Styling */
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 100;
+}
+
+.modal-backdrop.open {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.modal-card {
+    background: var(--bg-card);
+    width: 450px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    padding: 32px;
+    position: relative;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+}
+
+.close-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.modal-specs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.spec-box {
+    background: var(--bg-dark);
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-primary {
+    width: 100%;
+    background: linear-gradient(135deg, var(--accent-gold), #d97706);
+    color: var(--bg-dark);
+    border: none;
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.btn-primary:hover {
+    transform: scale(1.02);
+}
